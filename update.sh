@@ -31,7 +31,9 @@ echo "Updating package lists..."
 apt-get update
 
 echo "Upgrading installed packages..."
-apt-get upgrade -y
+if ! apt-get upgrade -y; then
+  echo "Warning: apt-get upgrade failed; continuing with the remaining steps." >&2
+fi
 
 echo "Installing required packages..."
 apt-get install -y "${PACKAGES[@]}"
