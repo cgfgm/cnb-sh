@@ -59,6 +59,17 @@ fi
 mkdir -p "$HOME/bin"
 export PATH="$HOME/bin:$PATH"
 
+bashrc="$HOME/.bashrc"
+touch "$bashrc"
+if ! grep -qxF 'PATH=~/bin:$PATH' "$bashrc"; then
+  printf '\nPATH=~/bin:$PATH\n' >> "$bashrc"
+fi
+
+set +eu
+# shellcheck disable=SC1090
+source "$bashrc"
+set -euo pipefail
+
 echo "Installing repo..."
 curl -fsSL https://storage.googleapis.com/git-repo-downloads/repo \
   -o "$HOME/bin/repo"
